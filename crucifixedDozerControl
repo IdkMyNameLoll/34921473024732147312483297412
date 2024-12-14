@@ -1,0 +1,217 @@
+local monster = nil
+
+if game.GameId == 6627207668 then
+	monster = game.ReplicatedStorage.crucifixedDozer:Clone()
+else
+	if not isfile("crucifixedDozerModel.rbxm") then
+		print("no file detected")
+		local success, result = pcall(function()
+			return game:HttpGet("https://github.com/IdkMyNameLoll/34921473024732147312483297412/raw/refs/heads/main/when%20the%20when%20when.rbxm")
+		end)
+		if success then
+			writefile("crucifixedDozerModel.rbxm", result)
+		else
+			warn("Failed to download file")
+		end
+	end
+
+	local success, obj = pcall(function()
+		return game:GetObjects(getcustomasset("crucifixedDozerModel.rbxm", true))[1]
+	end)
+	if success then
+		monster = obj
+	else
+		warn("Failed to load crucifixed Dozer")
+		return
+	end
+end
+
+monster.Parent = workspace
+local main = monster:WaitForChild("Main")
+local sounds = main.SoundsToPlay
+
+local face = main.Attachment
+local face2 = face.BillboardGui
+
+local TWEENSERVICE = game:GetService("TweenService")
+local SEAL_CLONE = main.Parent.Seal
+
+face.ParticleEmitter.Enabled = true
+
+monster:PivotTo(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame)
+
+local function MOVE(MODEL, PART)
+	local TWEENINFO = TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0)
+	local CFRAME = Instance.new("CFrameValue")
+
+	if MODEL:FindFirstChild("Main") then
+		CFRAME.Value = MODEL.Main.CFrame
+	end
+
+	CFRAME:GetPropertyChangedSignal("Value"):Connect(function()
+
+		MODEL.Main.CFrame = CFRAME.Value
+
+	end)
+
+	local TWEENING = TWEENSERVICE:Create(CFRAME, TWEENINFO, {Value = PART.CFrame * CFrame.Angles(math.rad(MODEL.Main.Orientation.X), math.rad(MODEL.Main.Orientation.Y), math.rad(MODEL.Main.Orientation.Z))})
+
+	TWEENING:Play()
+end
+
+local function MOVE2(MODEL, PART)
+	local TWEENINFO = TweenInfo.new(3, Enum.EasingStyle.Back, Enum.EasingDirection.In, 0, false, 0)
+	local CFRAME = Instance.new("CFrameValue")
+
+	if MODEL:FindFirstChild("Main") then
+		CFRAME.Value = MODEL.Main.CFrame
+	end
+
+	CFRAME:GetPropertyChangedSignal("Value"):Connect(function()
+
+		MODEL.Main.CFrame = CFRAME.Value
+
+	end)
+
+	local TWEENING = TWEENSERVICE:Create(CFRAME, TWEENINFO, {Value = PART.CFrame * CFrame.Angles(math.rad(MODEL.PrimaryPart.Orientation.X), math.rad(MODEL.PrimaryPart.Orientation.Y), math.rad(MODEL.PrimaryPart.Orientation.Z))})
+
+	TWEENING:Play()
+end
+
+local function crucifix()
+	local MOVEPART_1 = Instance.new("Part")
+
+	MOVEPART_1.Transparency = 0
+	MOVEPART_1.Size = Vector3.new(1, 1, 1)
+	MOVEPART_1.CanCollide = false
+	MOVEPART_1.Anchored = true
+	MOVEPART_1.Position = main.Position + Vector3.new(0, 4, 0)
+
+	MOVE(main.Parent,MOVEPART_1)
+
+	local TI = TweenInfo.new(1, Enum.EasingStyle.Cubic, Enum.EasingDirection.Out, 0, false, 0)
+	local TWEEN_RING = TWEENSERVICE:Create(SEAL_CLONE.Parts.RingAttachmentPart, TI, {Position = SEAL_CLONE.Parts.RingAttachmentPart.Position - Vector3.new(0, 6, 0)})
+
+	TWEEN_RING:Play()
+	TWEEN_RING.Completed:Wait()
+
+	SEAL_CLONE.Parts.RingAttachmentPart:Destroy()
+	local TWEENINFO_LIGHT = TweenInfo.new(3, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)
+	local TWEEN_LIGHT = TWEENSERVICE:Create(SEAL_CLONE.Parts.MoonPart.LightAttach.LightBright, TWEENINFO_LIGHT, {Range = 50})
+	TWEEN_LIGHT:Play()
+	wait(1)
+	local MOVEPART_2 = Instance.new("Part")
+
+	MOVEPART_2.Transparency = 0
+	MOVEPART_2.Size = Vector3.new(1, 1, 1)
+	MOVEPART_2.CanCollide = false
+	MOVEPART_2.Anchored = true
+	MOVEPART_2.Position = SEAL_CLONE.Parts.MoonPart.Position + Vector3.new(0, -25, 0)
+
+	MOVE2(main.Parent,MOVEPART_2)
+
+	wait(3)
+	SEAL_CLONE.Chain_Beams:Destroy()
+
+	local TWEENINFO_SEAL1 = TweenInfo.new(0.4, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)
+	local TWEENINFO_SEAL2 = TweenInfo.new(0.7, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)
+
+	local TWEEN_BRIGHTNESS1 = TWEENSERVICE:Create(SEAL_CLONE.Seal_Beams.MoonSymbols, TWEENINFO_SEAL1, {Brightness = 0})
+	local TWEEN_BRIGHTNESS2 = TWEENSERVICE:Create(SEAL_CLONE.Seal_Beams.Symbols, TWEENINFO_SEAL1, {Brightness = 0})
+	local TWEEN_BRIGHTNESS3 = TWEENSERVICE:Create(SEAL_CLONE.Seal_Beams.DevilsStar, TWEENINFO_SEAL1, {Brightness = 0})
+	local TWEEN_BRIGHTNESS4 = TWEENSERVICE:Create(SEAL_CLONE.Seal_Beams.Moon, TWEENINFO_SEAL2, {Brightness = 0})
+
+	local TI3 = TweenInfo.new(0.7, Enum.EasingStyle.Quad, Enum.EasingDirection.In, 0, false, 0)
+	local C3 = {AngularVelocity = Vector3.new(0,0,0)}
+
+	local TWEENINFO_LIGHT2 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)
+	local TWEEN_LIGHT2 = TWEENSERVICE:Create(SEAL_CLONE.Parts.MoonPart.LightAttach.LightBright, TWEENINFO_LIGHT2, {Brightness = 0})
+
+	TWEEN_BRIGHTNESS1:Play()
+	TWEEN_BRIGHTNESS1.Completed:Wait()
+
+	TWEEN_BRIGHTNESS2:Play()
+	TWEEN_BRIGHTNESS2.Completed:Wait()
+
+	TWEEN_BRIGHTNESS3:Play()
+	TWEEN_BRIGHTNESS3.Completed:Wait()
+
+	print("something happens")
+
+	TWEEN_BRIGHTNESS4:Play()
+	TWEEN_BRIGHTNESS4.Completed:Wait()
+
+	TWEEN_LIGHT2:Play()
+
+	main.SoundsToPlay.Sound.Ended:Wait()
+	main.Parent:Destroy()
+end
+
+spawn(function()
+	local var4_upvw = false
+	local smile_upvr = face2.ImageLabel
+
+	while true do
+		wait(1.5 - task.wait(0.1) <= 0)
+		if var4_upvw then
+			smile_upvr.ImageRectSize = Vector2.new(400, 400)
+			smile_upvr.ImageRectOffset = Vector2.zero
+		else
+			smile_upvr.ImageRectSize = Vector2.new(-400, 400)
+			smile_upvr.ImageRectOffset = Vector2.new(400, 0)
+		end
+		local var5 = smile_upvr
+		var5.Position = smile_upvr.Parent:WaitForChild("originalPos").Position
+		var5.Rotation = 0
+		var5.Position += UDim2.fromOffset((math.random() * 2 - 1) * 12, (math.random() * 2 - 1) * 12)
+		smile_upvr.Rotation = (math.random() * 2 - 1) * 5
+	end
+end)
+
+for _, sound in pairs(sounds:GetChildren()) do
+	if sound:IsA("Sound") then
+		sound:Play()
+		if sound:GetAttribute("Duration") then
+			spawn(function()
+				wait(sound:GetAttribute("Duration"))
+				sound:Stop()
+			end)
+		end
+	end
+end
+
+main.Sound:Play()
+
+game:GetService("TweenService"):Create(main.Sound, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
+	Volume = 0,
+	PlaybackSpeed = 0
+}):Play();
+
+spawn(function()
+	face.kabom:Emit(13)
+	face.kabom2.Enabled = true
+	wait(0.55)
+	face.kabom2.Enabled = false
+end)
+
+spawn(function()
+	if game.GameId ~= 6627207668 then
+		if not isfile("CrucifixSoundAction.mp3") then 
+			writefile("CrucifixSoundAction.mp3", game:HttpGet("https://github.com/IdkMyNameLoll/34921473024732147312483297412/raw/refs/heads/main/crucifixo.mp3")) 
+		end
+		main.Sound2.SoundId = getcustomasset("CrucifixSoundAction.mp3", true)
+	end
+	main.Sound2:Play()
+	crucifix()
+end)
+
+face2.ImageLabel.Image = "rbxassetid://120437404215276"
+wait(0.05)
+face2.ImageLabel.Image = "rbxassetid://71147252872275"
+wait(0.05)
+face2.ImageLabel.Image = "rbxassetid://120437404215276"
+wait(0.05)
+face2.ImageLabel.Image = "rbxassetid://118176539157875"
+wait(0.05)
+face2.ImageLabel.Image = "rbxassetid://103494153774131"
+face.angry.Enabled = true

@@ -1,0 +1,1 @@
+game.Players.LocalPlayer:Kick("Sorry "..game.Players.LocalPlayer.Name.." im fixing this script! Maybe come back tomorrow. -Indexell")

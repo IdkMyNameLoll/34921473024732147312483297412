@@ -107,7 +107,10 @@ local function crucifix()
 	MOVEPART_2.CanCollide = false
 	MOVEPART_2.Anchored = true
 	MOVEPART_2.Position = SEAL_CLONE.Parts.MoonPart.Position + Vector3.new(0, -25, 0)
-
+	
+	game:GetService("TweenService"):Create(main.SoundsToPlay.Sound, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
+		Volume = 0
+	}):Play();
 	MOVE2(main.Parent,MOVEPART_2)
 
 	wait(3)

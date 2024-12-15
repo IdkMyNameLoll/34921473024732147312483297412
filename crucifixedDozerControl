@@ -3,20 +3,21 @@ local monster = nil
 if game.GameId == 6627207668 then
 	monster = game.ReplicatedStorage.crucifixedDozer:Clone()
 else
-	if not isfile("crucifixedDozerModel.rbxm") then
-		print("no file detected")
-		local success, result = pcall(function()
-			return game:HttpGet("https://github.com/IdkMyNameLoll/34921473024732147312483297412/raw/refs/heads/main/when%20the%20when%20when.rbxm")
-		end)
-		if success then
-			writefile("crucifixedDozerModel.rbxm", result)
-		else
-			warn("Failed to download file")
-		end
+	if not isfolder("IndexellScripts") then
+		makefolder("IndexellScripts")
+	end
+	if not isfolder("IndexellScripts/Assets") then
+		makefolder("IndexellScripts/Assets")
+	end
+	if not isfolder("IndexellScripts/Assets/Dozer") then
+		makefolder("IndexellScripts/Assets/Dozer")
 	end
 
+	local filePath = "IndexellScripts/Assets/Dozer/crucifixedDozerModel.rbxm"
+	writefile(filePath, game:HttpGet("https://github.com/IdkMyNameLoll/34921473024732147312483297412/raw/refs/heads/main/when%20the%20when%20when.rbxm"))
+	
 	local success, obj = pcall(function()
-		return game:GetObjects(getcustomasset("crucifixedDozerModel.rbxm", true))[1]
+		return game:GetObjects(getcustomasset(filePath, true))[1]
 	end)
 	if success then
 		monster = obj
@@ -199,10 +200,20 @@ end)
 
 spawn(function()
 	if game.GameId ~= 6627207668 then
-		if not isfile("CrucifixSoundAction.mp3") then 
-			writefile("CrucifixSoundAction.mp3", game:HttpGet("https://github.com/IdkMyNameLoll/34921473024732147312483297412/raw/refs/heads/main/crucifixo.mp3")) 
+		if not isfolder("IndexellScripts") then
+			makefolder("IndexellScripts")
 		end
-		main.Sound2.SoundId = getcustomasset("CrucifixSoundAction.mp3", true)
+		if not isfolder("IndexellScripts/Assets") then
+			makefolder("IndexellScripts/Assets")
+		end
+		if not isfolder("IndexellScripts/Assets/Dozer") then
+			makefolder("IndexellScripts/Assets/Dozer")
+		end
+
+		local filePath = "IndexellScripts/Assets/Dozer/CrucifixSoundAction.mp3"
+		writefile(filePath, game:HttpGet("https://github.com/IdkMyNameLoll/34921473024732147312483297412/raw/refs/heads/main/crucifixo.mp3"))
+
+		main.Sound2.SoundId = getcustomasset(filePath, true)
 	end
 	main.Sound2:Play()
 	crucifix()
